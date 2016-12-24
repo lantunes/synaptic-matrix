@@ -1,0 +1,17 @@
+.grunt/
+.idea/
+.settings/
+.m2/
+build/
+dist/
+target/
+pkg/
+out/
+*.bak
+*.iml
+*.log
+*.orig
+*~
+.classpath
+.project
+atlassian-ide-plugin.xml
