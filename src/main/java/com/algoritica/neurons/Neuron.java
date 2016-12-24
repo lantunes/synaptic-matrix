@@ -8,7 +8,7 @@ import javolution.util.FastTable;
 
 import java.util.List;
 
-public class Neuron extends CognitiveElement {
+public class Neuron extends ConcurrentCognitiveComponent {
 
     private final IntChannel incoming;
     private final FastTable<IntChannel> outgoing = new FastTable<>();

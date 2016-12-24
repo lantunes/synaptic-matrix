@@ -3,14 +3,14 @@ package com.algoritica.neurons;
 import co.paralleluniverse.fibers.SuspendExecution;
 import co.paralleluniverse.strands.concurrent.CountDownLatch;
 
-public abstract class CognitiveElement extends Thread {
+public abstract class ConcurrentCognitiveComponent extends Thread {
 
     protected final int id;
     private final CountDownLatch countDownLatch;
 
     private boolean active;
 
-    public CognitiveElement(int id, CountDownLatch countDownLatch) {
+    public ConcurrentCognitiveComponent(int id, CountDownLatch countDownLatch) {
         this.id = id;
         this.countDownLatch = countDownLatch;
     }

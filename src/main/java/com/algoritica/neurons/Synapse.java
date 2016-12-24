@@ -1,14 +1,11 @@
 package com.algoritica.neurons;
 
 import co.paralleluniverse.fibers.SuspendExecution;
-import co.paralleluniverse.fibers.Suspendable;
 import co.paralleluniverse.strands.channels.Channels;
 import co.paralleluniverse.strands.channels.IntChannel;
 import co.paralleluniverse.strands.concurrent.CountDownLatch;
 
-import java.util.concurrent.TimeUnit;
-
-public class Synapse extends CognitiveElement {
+public class Synapse extends ConcurrentCognitiveComponent {
 
     private final IntChannel incoming;
     private final IntChannel outgoing;
