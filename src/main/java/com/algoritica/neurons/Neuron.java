@@ -82,6 +82,41 @@ public class Neuron extends ConcurrentCognitiveComponent {
              *
              * With this concurrent neuronal system, it seems that, to achieve the result of sigmoidal activation in
              * common neural nets, the neuron's spiking behaviour over a time range would have to be considered.
+             *
+             * From: http://stackoverflow.com/questions/15640195/how-to-determine-the-threshold-for-neuron-firings-in-neural-networks
+             * "be careful: a perceptron with a simple threshold activation function can only be correct if your data
+             * are linearly separable. If you have more complex data you will need a Multilayer Perceptron and a
+             * nonlinear activation function like the Logistic Sigmoid Function"
+             * Multilayer neural networks with a simple threshold activation function have less representational power than the same
+             * network with a sigmoidal activation function, requiring more neurons and connections. - source unknown
+             *
+             * In a common neural net, what does it mean for a "firing rate" to be multiplied by a "synaptic weight"?
+             * In this sense, common neural nets are unintuitive and not very biologically relevant.
+             *
+             * With this concurrent neuronal system, we have to achieve the same kind of representational power as common neural
+             * nets. But how? We can consider two things: a range of time, and the number of spikes of the neuron in
+             * that time range, instead of just whether a neuron fires or not.
+             * For example: We deliver the sensory inputs every 10 ms over a period of 40 ms. Then, we measure how many
+             * times, and when, the neuron in question fires. By adjusting the weights, the neuron can learn to fire
+             * more times or fewer times during that same period.
+             *
+             *         |-----40 ms--------------|
+             * input:  |--0,1---0,1---0,1----0,1|
+             * output: |------------*-----------|
+             *
+             *         |-----40 ms--------------|
+             * input:  |--1,0---1,0---1,0----1,0|
+             * output: |------------*-----------|
+             *
+             *         |-----40 ms--------------|
+             * input:  |--0,0---0,0---0,0----0,0|
+             * output: |------------------------|
+             *
+             *         |-----40 ms--------------|
+             * input:  |--1,1---1,1---1,1----1,1|
+             * output: |------*-----*------*----|
+             *
+             * where * represents a spike
              */
             outgoing.send(new ActionPotential(1));
 
