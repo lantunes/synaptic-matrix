@@ -1,6 +1,8 @@
 package com.algoritica.neurons;
 
 import co.paralleluniverse.fibers.SuspendExecution;
+import co.paralleluniverse.strands.channels.Channel;
+import co.paralleluniverse.strands.channels.Channels;
 import co.paralleluniverse.strands.concurrent.CountDownLatch;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -16,8 +18,8 @@ public class Main extends Application {
         launch(args);
     }
 
-    private Synapse in1;
-    private Synapse in2;
+    private Channel<ActionPotential> stimulus1;
+    private Channel<ActionPotential> stimulus2;
 
     @Override
     public void start(Stage primaryStage) {
@@ -35,13 +37,16 @@ public class Main extends Application {
                 int y = 0;
                 CountDownLatch countDownLatch = new CountDownLatch(1);
 
+                stimulus1 = Channels.newChannel(-1, Channels.OverflowPolicy.BLOCK, true, true);
+                stimulus2 = Channels.newChannel(-1, Channels.OverflowPolicy.BLOCK, true, true);
+
                 Neuron n = new Neuron(0, countDownLatch, 5, 0.001);
-                in1 = new Synapse(1, countDownLatch, 1,  n.incoming());
-                in2 = new Synapse(2, countDownLatch, 1,  n.incoming());
+                Synapse s1 = new Synapse(1, countDownLatch, 1, stimulus1,  n.incoming());
+                Synapse s2 = new Synapse(2, countDownLatch, 1, stimulus2,  n.incoming());
 
                 n.start();
-                in1.start();
-                in2.start();
+                s1.start();
+                s2.start();
 
                 countDownLatch.countDown();
                 System.out.println("cognitive elements started");
@@ -53,8 +58,8 @@ public class Main extends Application {
         send.setOnAction(actionEvent -> {
             try {
                 //TODO these inputs should be sent together, not sequentially
-                in1.incoming().send(1);
-                in2.incoming().send(1);
+                stimulus1.send(new ActionPotential(1));
+                stimulus2.send(new ActionPotential(1));
 
             } catch (SuspendExecution | InterruptedException e) {
                 e.printStackTrace();

@@ -1,34 +1,30 @@
 package com.algoritica.neurons;
 
 import co.paralleluniverse.fibers.SuspendExecution;
-import co.paralleluniverse.strands.channels.Channels;
-import co.paralleluniverse.strands.channels.IntChannel;
+import co.paralleluniverse.strands.channels.Channel;
 import co.paralleluniverse.strands.concurrent.CountDownLatch;
 
 public class Synapse extends ConcurrentCognitiveComponent {
 
-    private final IntChannel incoming;
-    private final IntChannel outgoing;
+    private final Channel<ActionPotential> incoming;
+    private final Channel<ActionPotential> outgoing;
 
     private int weight;
 
-    public Synapse(int id, CountDownLatch countDownLatch, int initialWeight, IntChannel outgoing) {
+    public Synapse(int id, CountDownLatch countDownLatch, int initialWeight,
+                   Channel<ActionPotential> incoming, Channel<ActionPotential> outgoing) {
         super(id, countDownLatch);
-        this.incoming = Channels.newIntChannel(-1, Channels.OverflowPolicy.BLOCK, true, true);
+        this.incoming = incoming;
         this.weight = initialWeight;
         this.outgoing = outgoing;
-    }
-
-    public IntChannel incoming() {
-        return incoming;
     }
 
     @Override
     protected void process() throws SuspendExecution, InterruptedException {
 
-        int input = incoming.receive();
+        ActionPotential input = incoming.receive();
         System.out.println("[synapse " + id + "][" + System.nanoTime() + " ns][INPUT]: " + input + " {weight: " + weight + "}");
-        outgoing.send(input * weight);
+        outgoing.send(new ActionPotential(input.get() * weight));
 
         //wait to see if downstream neuron fired for STDP
         //TODO this isn't going to work, as outgoing.send() in this process is going to trigger outgoing.receive()

@@ -1,15 +1,14 @@
 package com.algoritica.neurons;
 
 import co.paralleluniverse.fibers.SuspendExecution;
+import co.paralleluniverse.strands.channels.Channel;
 import co.paralleluniverse.strands.channels.Channels;
-import co.paralleluniverse.strands.channels.IntChannel;
 import co.paralleluniverse.strands.concurrent.CountDownLatch;
-import javolution.util.FastTable;
 
 public class Neuron extends ConcurrentCognitiveComponent {
 
-    private final IntChannel incoming;
-    private final FastTable<IntChannel> outgoing = new FastTable<>();
+    private final Channel<ActionPotential> incoming;
+    private final Channel<ActionPotential> outgoing;
 
     private final int threshold;
 
@@ -24,20 +23,24 @@ public class Neuron extends ConcurrentCognitiveComponent {
 
     private long lastInputTimeNano;
 
-    public Neuron(int id, CountDownLatch countDownLatch, int threshold, double leakRate, IntChannel ... out) {
+    public Neuron(int id, CountDownLatch countDownLatch, int threshold, double leakRate) {
         super(id, countDownLatch);
-        this.incoming = Channels.newIntChannel(-1, Channels.OverflowPolicy.BLOCK, false, true);
+        this.incoming = Channels.newChannel(-1, Channels.OverflowPolicy.BLOCK, false, true);
+        /*
+         * a neuron can be connected to up to 100 downstream synapses before it might block while sending
+         * an action potential downstream; this number can be bumped up if required
+         */
+        this.outgoing = Channels.newChannel(100, Channels.OverflowPolicy.BLOCK, true, false);
         this.threshold = threshold;
         this.leakRate = leakRate;
-        this.outgoing.addAll(out);
     }
 
-    public IntChannel incoming() {
+    public Channel<ActionPotential> incoming() {
         return incoming;
     }
 
-    public void addOutgoing(IntChannel out) {
-        outgoing.add(out);
+    public Channel<ActionPotential> outgoing() {
+        return outgoing;
     }
 
     @Override
@@ -48,7 +51,7 @@ public class Neuron extends ConcurrentCognitiveComponent {
     @Override
     protected void process() throws SuspendExecution, InterruptedException {
 
-        int input = incoming.receive();
+        ActionPotential input = incoming.receive();
 
         //subtract leak amount since last input
         long now = System.nanoTime();
@@ -57,16 +60,14 @@ public class Neuron extends ConcurrentCognitiveComponent {
         potential = (leakAmount > potential) ? 0 : potential - leakAmount;
 
         //integrate input
-        potential += input;
+        potential += input.get();
         System.out.println("[neuron " + id + "][" + System.nanoTime() + " ns][INPUT]: " + input +
                 " {potential: " + potential + ", leaked: " + leakAmount + "}");
 
         if (potential > threshold) {
             //spike
             System.out.println("[neuron " + id + "][" + System.nanoTime() + " ns][SPIKE]");
-            for (IntChannel out : outgoing) {
-                out.send(potential);
-            }
+            outgoing.send(new ActionPotential(potential));
 
             //send a message back to incoming synapses for STDP
             //TODO this isn't going to work, as it will trigger incoming.receive() in this process
