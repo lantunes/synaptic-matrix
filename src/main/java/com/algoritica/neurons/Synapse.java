@@ -10,11 +10,12 @@ public class Synapse extends ConcurrentCognitiveComponent {
     private final IntChannel incoming;
     private final IntChannel outgoing;
 
-    private int weight = 1;
+    private int weight;
 
-    public Synapse(int id, CountDownLatch countDownLatch, IntChannel outgoing) {
+    public Synapse(int id, CountDownLatch countDownLatch, int initialWeight, IntChannel outgoing) {
         super(id, countDownLatch);
         this.incoming = Channels.newIntChannel(-1, Channels.OverflowPolicy.BLOCK, true, true);
+        this.weight = initialWeight;
         this.outgoing = outgoing;
     }
 
@@ -26,7 +27,7 @@ public class Synapse extends ConcurrentCognitiveComponent {
     protected void process() throws SuspendExecution, InterruptedException {
 
         int input = incoming.receive();
-        System.out.println("[synapse " + id + "] - input received: " + input + " {weight: " + weight + "}");
+        System.out.println("[synapse " + id + "][" + System.nanoTime() + " ns][INPUT]: " + input + " {weight: " + weight + "}");
         outgoing.send(input * weight);
 
         //wait to see if downstream neuron fired for STDP

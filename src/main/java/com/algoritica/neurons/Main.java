@@ -35,11 +35,9 @@ public class Main extends Application {
                 int y = 0;
                 CountDownLatch countDownLatch = new CountDownLatch(1);
 
-                Neuron n = null;
-
-                n = new Neuron(0, countDownLatch, null);
-                in1 = new Synapse(1, countDownLatch, n.incoming());
-                in2 = new Synapse(2, countDownLatch, n.incoming());
+                Neuron n = new Neuron(0, countDownLatch, 5, 0.001);
+                in1 = new Synapse(1, countDownLatch, 1,  n.incoming());
+                in2 = new Synapse(2, countDownLatch, 1,  n.incoming());
 
                 n.start();
                 in1.start();
@@ -47,12 +45,14 @@ public class Main extends Application {
 
                 countDownLatch.countDown();
                 System.out.println("cognitive elements started");
+                printNetwork();
             }).start();
         });
 
         Button send = new Button("Send");
         send.setOnAction(actionEvent -> {
             try {
+                //TODO these inputs should be sent together, not sequentially
                 in1.incoming().send(1);
                 in2.incoming().send(1);
 
@@ -65,5 +65,26 @@ public class Main extends Application {
 
         primaryStage.setScene(new Scene(new Group(hbox)));
         primaryStage.show();
+    }
+
+    private void printNetwork() {
+        System.out.println("[network");
+        System.out.println("  [synapse");
+        System.out.println("    id 1");
+        System.out.println("    weight 1");
+        System.out.println("  ]");
+        System.out.println("  [synapse");
+        System.out.println("    id 2");
+        System.out.println("    weight 1");
+        System.out.println("  ]");
+        System.out.println("  [neuron");
+        System.out.println("    id 0");
+        System.out.println("    threshold 5");
+        System.out.println("    [dendrite");
+        System.out.println("      synapse 1");
+        System.out.println("      synapse 2");
+        System.out.println("    ]");
+        System.out.println("  ]");
+        System.out.println("]");
     }
 }

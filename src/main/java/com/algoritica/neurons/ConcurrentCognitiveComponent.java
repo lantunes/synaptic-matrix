@@ -27,6 +27,7 @@ public abstract class ConcurrentCognitiveComponent extends Thread {
             throw new RuntimeException(e);
         }
         active = true;
+        onStart();
         while (active) {
             try {
                 process();
@@ -34,6 +35,9 @@ public abstract class ConcurrentCognitiveComponent extends Thread {
                 e.printStackTrace();
             }
         }
+    }
+
+    protected void onStart() {
     }
 
     protected abstract void process() throws SuspendExecution, InterruptedException;

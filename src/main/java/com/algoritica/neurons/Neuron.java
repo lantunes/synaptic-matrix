@@ -6,23 +6,30 @@ import co.paralleluniverse.strands.channels.IntChannel;
 import co.paralleluniverse.strands.concurrent.CountDownLatch;
 import javolution.util.FastTable;
 
-import java.util.List;
-
 public class Neuron extends ConcurrentCognitiveComponent {
 
     private final IntChannel incoming;
     private final FastTable<IntChannel> outgoing = new FastTable<>();
 
-    private final int threshold = 5;
+    private final int threshold;
 
-    private int current = 0;
+    /*
+     * number of potential units leaked per millisecond;
+     * e.g. a leak rate of 0.1 means 1 potential unit will be lost every 10 ms
+     *      a leak rate of 0.001 means 1 potential unit will be lost every 1 s
+     */
+    private final double leakRate;
 
-    public Neuron(int id, CountDownLatch countDownLatch, List<IntChannel> out) {
+    private int potential = 0;
+
+    private long lastInputTimeNano;
+
+    public Neuron(int id, CountDownLatch countDownLatch, int threshold, double leakRate, IntChannel ... out) {
         super(id, countDownLatch);
         this.incoming = Channels.newIntChannel(-1, Channels.OverflowPolicy.BLOCK, false, true);
-        if (out != null) {
-            this.outgoing.addAll(out);
-        }
+        this.threshold = threshold;
+        this.leakRate = leakRate;
+        this.outgoing.addAll(out);
     }
 
     public IntChannel incoming() {
@@ -34,26 +41,44 @@ public class Neuron extends ConcurrentCognitiveComponent {
     }
 
     @Override
+    protected void onStart() {
+        lastInputTimeNano = System.nanoTime();
+    }
+
+    @Override
     protected void process() throws SuspendExecution, InterruptedException {
 
         int input = incoming.receive();
-        current += input;
-        System.out.println("[neuron " + id + "] - input received: " + input + " {current: " + current + "}");
 
-        if (current > threshold) {
+        //subtract leak amount since last input
+        long now = System.nanoTime();
+        int leakAmount = amountLeaked(now);
+        lastInputTimeNano = now;
+        potential = (leakAmount > potential) ? 0 : potential - leakAmount;
+
+        //integrate input
+        potential += input;
+        System.out.println("[neuron " + id + "][" + System.nanoTime() + " ns][INPUT]: " + input +
+                " {potential: " + potential + ", leaked: " + leakAmount + "}");
+
+        if (potential > threshold) {
             //spike
-            System.out.println("[neuron " + id + "] - SPIKE");
+            System.out.println("[neuron " + id + "][" + System.nanoTime() + " ns][SPIKE]");
             for (IntChannel out : outgoing) {
-                out.send(current);
+                out.send(potential);
             }
 
             //send a message back to incoming synapses for STDP
             //TODO this isn't going to work, as it will trigger incoming.receive() in this process
-//            incoming.send(current);
+//            incoming.send(potential);
 
-            current = 0;
+            potential = 0;
         }
+    }
 
-        //TODO leak
+    private int amountLeaked(long now) {
+        long timeElapsedNano = now - lastInputTimeNano;
+        long timeElapsedMillis = timeElapsedNano / 1000000;
+        return (int)(timeElapsedMillis * leakRate);
     }
 }
