@@ -10,6 +10,13 @@ import co.paralleluniverse.strands.concurrent.CountDownLatch;
  * and updates the weights of specific synapses.
  *
  * see Kurzawa et al., Neural Computation 29, 1–26 (2017)
+ *
+ * As an alternative mechanism, consider that the critic module can
+ * inform the modulator of a reward or punishment, and the modulator
+ * can change synapses by making them Hebbian or anti-Hebbian, depending on
+ * whether a reward or punishment was administered.
+ *
+ * see Florian et al. Neural Computation 19 (6), pp. 1468-1502, 2007.
  */
 public class Modulator extends ConcurrentCognitiveComponent {
 

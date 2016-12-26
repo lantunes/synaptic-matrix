@@ -142,6 +142,10 @@ public class Neuron extends ConcurrentCognitiveComponent {
              *   ]
              * ]
              *
+             * (In Florian et al. Neural Computation 19 (6), pp. 1468-1502, 2007, they train a spiking network
+             * so that it learns XOR. They consider the network learned XOR if the spike rate of [1,1] is lower than
+             * the spike rate of [1,0] and [0,1]. The spike rate of [0,0] is always 0.)
+             *
              * When setting up a network, how do we know what output spike rates are possible given the configuration?
              * For example, say we want to learn to classify hand written letters.. what spike rates should we assign
              * the various letters during training?
