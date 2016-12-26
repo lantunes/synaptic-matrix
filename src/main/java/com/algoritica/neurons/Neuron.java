@@ -74,7 +74,9 @@ public class Neuron extends ConcurrentCognitiveComponent {
              * Could we replace this value with some function of the potential, such as a sigmoidal function?
              * What would be the biological relevance of the resulting value in this context?
              * In a traditional neural net, this value could be interpreted as the
-             * "firing rate", or "activity" of the neuron.
+             * "firing rate", or "activity" of the neuron. In common neural nets, activation functions are
+             * usually sigmoidal because neurons max out their firing rate at some fixed level. This is the biological
+             * relevance of sigmoidal activation functions.
              *
              * A difference is that, in a common neural net, the activation function is always computed,
              * regardless of the value of the summation (of inputs*weights); whereas what's being proposed here,
@@ -96,27 +98,32 @@ public class Neuron extends ConcurrentCognitiveComponent {
              * With this concurrent neuronal system, we have to achieve the same kind of representational power as common neural
              * nets. But how? We can consider two things: a range of time, and the number of spikes of the neuron in
              * that time range, instead of just whether a neuron fires or not.
-             * For example: We deliver the sensory inputs every 10 ms over a period of 40 ms. Then, we measure how many
-             * times, and when, the neuron in question fires. By adjusting the weights, the neuron can learn to fire
+             * For example: We deliver the sensory inputs every 10 ms over a period of 50 ms. Then, we measure how many
+             * times, (and when?), the neuron in question fires in that period. By adjusting the weights, the neuron can learn to fire
              * more times or fewer times during that same period.
              *
-             *         |-----40 ms--------------|
-             * input:  |--0,1---0,1---0,1----0,1|
-             * output: |------------*-----------|
+             *         |-------------50 ms---------|
+             * input:  |---0,1---0,1---0,1---0,1---|
+             * output: |------------*-----------*--|
              *
-             *         |-----40 ms--------------|
-             * input:  |--1,0---1,0---1,0----1,0|
-             * output: |------------*-----------|
+             *         |------------50 ms----------|
+             * input:  |---1,0---1,0---1,0---1,0---|
+             * output: |------------*-----------*--|
              *
-             *         |-----40 ms--------------|
-             * input:  |--0,0---0,0---0,0----0,0|
-             * output: |------------------------|
+             *         |------------50 ms----------|
+             * input:  |---0,0---0,0---0,0---0,0---|
+             * output: |---------------------------|
              *
-             *         |-----40 ms--------------|
-             * input:  |--1,1---1,1---1,1----1,1|
-             * output: |------*-----*------*----|
+             *         |------------50 ms----------|
+             * input:  |---1,1---1,1---1,1---1,1---|
+             * output: |------*-----*-----*-----*--|
              *
-             * where * represents a spike
+             * where * represents a spike, n threshold=5, s1 weight=3, s2 weight=3
+             *
+             * TODO:
+             * When setting up a network, how do we know what output spike rates are possible given the configuration?
+             * For example, say we want to learn to classify hand written letters.. what spike rates should we assign
+             * the various letters during training?
              */
             outgoing.send(new ActionPotential(1));
 
