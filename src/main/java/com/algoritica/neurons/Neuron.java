@@ -78,12 +78,14 @@ public class Neuron extends ConcurrentCognitiveComponent {
              * usually sigmoidal because neurons max out their firing rate at some fixed level. This is the biological
              * relevance of sigmoidal activation functions.
              *
-             * A difference is that, in a common neural net, the activation function is always computed,
-             * regardless of the value of the summation (of inputs*weights); whereas what's being proposed here,
-             * is that the activation function is invoked only if a threshold is surpassed.
+             * In a common neural net, as in this system, the activation function is always computed,
+             * regardless of the value of the summation (of inputs*weights). With a binary step function, the output
+             * is 0 or 1. With other kinds of functions, such as sigmoidal functions, the output can take on a continuous
+             * range of values.
              *
              * With this concurrent neuronal system, it seems that, to achieve the result of sigmoidal activation in
              * common neural nets, the neuron's spiking behaviour over a time range would have to be considered.
+             * -- this may not be true; see further below
              *
              * From: http://stackoverflow.com/questions/15640195/how-to-determine-the-threshold-for-neuron-firings-in-neural-networks
              * "be careful: a perceptron with a simple threshold activation function can only be correct if your data
@@ -140,7 +142,6 @@ public class Neuron extends ConcurrentCognitiveComponent {
              *   ]
              * ]
              *
-             * TODO:
              * When setting up a network, how do we know what output spike rates are possible given the configuration?
              * For example, say we want to learn to classify hand written letters.. what spike rates should we assign
              * the various letters during training?
@@ -149,6 +150,16 @@ public class Neuron extends ConcurrentCognitiveComponent {
              * cannot learn much. However, that is in the context of traditional neural nets, that use backprop of error to learn.
              * In this concurrent approach, learning is local. We may not be able to learn XOR with a single neuron,
              * but that doesn't mean it is not worthwhile pursuing.
+             * However, is a network with a binary step activation function a universal approximator? Can it approximate any
+             * function?
+             * A: Yes. See:
+             * - Approximation with Artificial Neural Networks, Balázs Csanád Csáj, MSc Thesis, 2001
+             * - Approximation Capabilities of Muitilayer Feedforward Networks, Kurt Hornik, Neural Networks, Vol. 4, pp. 251-257. 1991
+             *   "it is not the specific choice of the activation function, but rather the multilayer feedforward architecture
+             *    itself which gives neural networks the potential of being universal learning machines"
+             * Binary step functions are discontinuous nonlinear functions, whereas a sigmoidal function is a continuous
+             * nonlinear function. But both are nonlinear.
+             *
              */
             outgoing.send(new ActionPotential(1));
 
