@@ -144,6 +144,11 @@ public class Neuron extends ConcurrentCognitiveComponent {
              * When setting up a network, how do we know what output spike rates are possible given the configuration?
              * For example, say we want to learn to classify hand written letters.. what spike rates should we assign
              * the various letters during training?
+             *
+             * The initial fear is that a simple feed-forward multilayer perceptron with a simple step activation function
+             * cannot learn much. However, that is in the context of traditional neural nets, that use backprop of error to learn.
+             * In this concurrent approach, learning is local. We may not be able to learn XOR with a single neuron,
+             * but that doesn't mean it is not worthwhile pursuing.
              */
             outgoing.send(new ActionPotential(1));
 
