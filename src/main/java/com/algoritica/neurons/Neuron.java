@@ -100,7 +100,9 @@ public class Neuron extends ConcurrentCognitiveComponent {
              * that time range, instead of just whether a neuron fires or not.
              * For example: We deliver the sensory inputs every 10 ms over a period of 50 ms. Then, we measure how many
              * times, (and when?), the neuron in question fires in that period. By adjusting the weights, the neuron can learn to fire
-             * more times or fewer times during that same period.
+             * more times or fewer times during that same period. We can say that the network has learned to classify an input
+             * when the pattern is the same for all inputs of a given class. For example, below is a network that has learned
+             * the XOR function (though we can say it has also learned the AND and NOR functions):
              *
              *         |-------------50 ms---------|
              * input:  |---0,1---0,1---0,1---0,1---|
