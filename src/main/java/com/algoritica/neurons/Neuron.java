@@ -118,7 +118,25 @@ public class Neuron extends ConcurrentCognitiveComponent {
              * input:  |---1,1---1,1---1,1---1,1---|
              * output: |------*-----*-----*-----*--|
              *
-             * where * represents a spike, n threshold=5, s1 weight=3, s2 weight=3
+             * where * represents a spike, for the network:
+             * [network
+             *   [synapse
+             *     id 1
+             *     weight 3
+             *   ]
+             *   [synapse
+             *     id 2
+             *     weight 3
+             *   ]
+             *   [neuron
+             *     id 0
+             *     threshold 5
+             *     [dendrite
+             *       synapse 1
+             *       synapse 2
+             *     ]
+             *   ]
+             * ]
              *
              * TODO:
              * When setting up a network, how do we know what output spike rates are possible given the configuration?
