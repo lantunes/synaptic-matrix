@@ -1,4 +1,4 @@
-package com.algoritica.neurons;
+package com.algoritica.neurons.concurrent;
 
 import co.paralleluniverse.fibers.Fiber;
 import co.paralleluniverse.fibers.SuspendExecution;

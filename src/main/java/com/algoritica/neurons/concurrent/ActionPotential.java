@@ -1,4 +1,4 @@
-package com.algoritica.neurons;
+package com.algoritica.neurons.concurrent;
 
 public class ActionPotential {
 
