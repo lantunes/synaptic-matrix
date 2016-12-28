@@ -14,7 +14,11 @@ import com.google.common.io.Resources;
  * -- this was tried and resulted in a 62.04% accuracy
  *
  * Another thing to try would be to perhaps try to stack another synaptic matrix or two together,
- * and create a "deep" synaptic matrix.
+ * and create a "deep" synaptic matrix. We can try to create a convolutional synaptic matrix. We can create a number of
+ * synaptic matrices of smaller size that correspond to smaller, overlapping regions of the image. These matrices feed
+ * up to a master matrix.
+ *
+ * We can also try to understand what Trehub means by introducing an Imaging Matrix in addition to the Detection Matrix.
  */
 public class MnistDemo {
 
