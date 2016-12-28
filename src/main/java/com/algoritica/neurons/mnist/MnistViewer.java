@@ -60,7 +60,7 @@ public class MnistViewer extends Application {
                     int[][] image = mnistManager.readImage();
                     for (int x = 0; x < image.length; x++) {
                         for (int y = 0; y < image[x].length; y++) {
-                            canvas.getGraphicsContext2D().setFill(Color.rgb(image[x][y], 0, 0));
+                            canvas.getGraphicsContext2D().setFill(Color.rgb(image[x][y], image[x][y], image[x][y]));
                             canvas.getGraphicsContext2D().fillRect(y, x, 1, 1);
                         }
                     }
