@@ -4,25 +4,25 @@ package com.algoritica.neurons.matrix;
  * based on the equation: weight = b + c + kN^-1
  */
 public class SynapticConfig {
-    private final int b;
-    private final int c;
-    private final int k;
+    private final long b;
+    private final long c;
+    private final long k;
 
-    public SynapticConfig(int b, int c, int k) {
+    public SynapticConfig(long b, long c, long k) {
         this.b = b;
         this.c = c;
         this.k = k;
     }
 
-    public int b() {
+    public long b() {
         return b;
     }
 
-    public int c() {
+    public long c() {
         return c;
     }
 
-    public int k() {
+    public long k() {
         return k;
     }
 }

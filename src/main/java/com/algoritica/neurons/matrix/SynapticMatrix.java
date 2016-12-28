@@ -60,29 +60,29 @@ public class SynapticMatrix {
         }
 
         for (int e = 0; e < examples.length; e++) {
-            int[] inputs = examples[e];
-            if (inputs.length != numInputCells) {
-                throw new IllegalArgumentException("the number of inputs in example " + e +
-                        " does not equal the number of input cells");
-            }
+            train(examples[e], e);
+        }
+    }
 
-            //ClassCell classCell = classCells[e];
-            List<Synapse> eligibleSynapses = new ArrayList<>();
-            for (int i = 0; i < inputs.length; i++) {
-                InputCell inputCell = inputCells[i];
-                int input = inputs[i];
-                Synapse synapse = inputCell.getSynapse(e);
-                if (input * synapse.getWeight() > 0) {
-                    eligibleSynapses.add(synapse);
-                }
-            }
-            int kPerN = config.k() / eligibleSynapses.size();
-            for (Synapse synapseToUpdate : eligibleSynapses) {
-                synapseToUpdate.setWeight(config.b() + config.c() + kPerN);
-            }
+    public void train(int[] inputExample, int classCell) {
+        if (inputExample.length != numInputCells) {
+            throw new IllegalArgumentException("the number of inputs in example " + classCell +
+                    " does not equal the number of input cells");
         }
 
-        System.out.println();
+        List<Synapse> eligibleSynapses = new ArrayList<>();
+        for (int i = 0; i < inputExample.length; i++) {
+            InputCell inputCell = inputCells[i];
+            int input = inputExample[i];
+            Synapse synapse = inputCell.getSynapse(classCell);
+            if (input * synapse.getWeight() > 0) {
+                eligibleSynapses.add(synapse);
+            }
+        }
+        long kPerN = config.k() / eligibleSynapses.size();
+        for (Synapse synapseToUpdate : eligibleSynapses) {
+            synapseToUpdate.setWeight(synapseToUpdate.getWeight() + config.c() + kPerN);
+        }
     }
 
     public int[] evaluate(int[] input) {

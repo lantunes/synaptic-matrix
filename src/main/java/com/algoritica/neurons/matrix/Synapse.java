@@ -6,19 +6,19 @@ public class Synapse {
 
     private final ClassCell classCell;
 
-    private int weight;
+    private long weight;
 
-    public Synapse(int initialWeight, InputCell inputCell, ClassCell classCell) {
+    public Synapse(long initialWeight, InputCell inputCell, ClassCell classCell) {
         this.weight = initialWeight;
         this.inputCell = inputCell;
         this.classCell = classCell;
     }
 
-    public int getWeight() {
+    public long getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(long weight) {
         this.weight = weight;
     }
 

@@ -23,7 +23,8 @@ public class ClassCell {
         }
         int activation = 0;
         for (int i = 0; i < inputs.length; i++) {
-            activation += inputs[i] * dendriticSynapses.get(i).getWeight();
+            int input = inputs[i] > 1 ? 1 : inputs[i]; //TODO normalize inputs to 1 for now
+            activation += input * dendriticSynapses.get(i).getWeight();
         }
         return activation;
     }
