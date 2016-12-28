@@ -3,7 +3,6 @@ package com.algoritica.neurons.mnist;
 import com.google.common.io.Resources;
 import javafx.application.Application;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
@@ -23,25 +22,31 @@ public class MnistViewer extends Application {
 
             GridPane gridPane = new GridPane();
 
-            final Canvas canvas = new Canvas(28, 28);
-            final TextField indexField = new TextField();
+            final Canvas canvas = new Canvas(112, 112);
+            canvas.setScaleX(4);
+            canvas.setScaleY(4);
+            canvas.setTranslateX(168);
+            canvas.setTranslateY(168);
+            final Label indexLabel = new Label("Label: ");
+            final Label exampleLabel = new Label("Example #:");
+            final TextField exampleField = new TextField();
             final ToggleGroup toggleGroup = new ToggleGroup();
-            final RadioButton trainingSet = new RadioButton("Training set");
+            final RadioButton trainingSet = new RadioButton("Training set (valid values are 1 to 60000)");
             trainingSet.setSelected(true);
             trainingSet.setToggleGroup(toggleGroup);
-            final RadioButton testSet = new RadioButton("Test set");
+            final RadioButton testSet = new RadioButton("Test set (valid values are 1 to 10000)");
             testSet.setToggleGroup(toggleGroup);
             final Button loadButton = new Button("Load");
-            final Label message = new Label("enter a value from 1 to 60000 (or 10000 for test set)");
             final Label label = new Label();
 
-            gridPane.add(canvas, 0, 0);
-            gridPane.add(indexField, 0, 1, 2, 1);
-            gridPane.add(trainingSet, 0, 2, 2, 1);
-            gridPane.add(testSet, 0, 3, 2 ,1);
-            gridPane.add(message, 0, 4, 2, 1);
-            gridPane.add(loadButton, 0, 5, 2, 1);
-            gridPane.add(label, 1, 0, 1, 1);
+            gridPane.add(canvas,       0, 0, 2, 1);
+            gridPane.add(indexLabel,   0, 1, 1, 1);
+            gridPane.add(label,        1, 1, 1, 1);
+            gridPane.add(exampleLabel, 0, 2, 1, 1);
+            gridPane.add(exampleField, 1, 2, 1, 1);
+            gridPane.add(trainingSet,  0, 3, 2, 1);
+            gridPane.add(testSet,      0, 4, 2 ,1);
+            gridPane.add(loadButton,   0, 5, 2, 1);
 
             loadButton.setOnAction((actionEvent) -> {
                 try {
@@ -56,7 +61,7 @@ public class MnistViewer extends Application {
                     }
                     MnistManager mnistManager = new MnistManager(imagesFile, labelsFile);
 
-                    mnistManager.setCurrent(Integer.parseInt(indexField.getText()));
+                    mnistManager.setCurrent(Integer.parseInt(exampleField.getText()));
                     int[][] image = mnistManager.readImage();
                     for (int x = 0; x < image.length; x++) {
                         for (int y = 0; y < image[x].length; y++) {
@@ -72,7 +77,12 @@ public class MnistViewer extends Application {
 
             Group group = new Group();
             group.getChildren().add(gridPane);
+            primaryStage.setTitle("MNIST Viewer");
             primaryStage.setScene(new Scene(group));
+            primaryStage.setMaxHeight(285);
+            primaryStage.setMinHeight(285);
+            primaryStage.setMaxWidth(315);
+            primaryStage.setMinWidth(315);
             primaryStage.show();
 
         } catch (Exception e) {
