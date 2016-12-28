@@ -79,9 +79,11 @@ public class SynapticMatrix {
                 eligibleSynapses.add(synapse);
             }
         }
-        long kPerN = config.k() / eligibleSynapses.size();
-        for (Synapse synapseToUpdate : eligibleSynapses) {
-            synapseToUpdate.setWeight(synapseToUpdate.getWeight() + config.c() + kPerN);
+        if (eligibleSynapses.size() > 0) {
+            long kPerN = config.k() / eligibleSynapses.size();
+            for (Synapse synapseToUpdate : eligibleSynapses) {
+                synapseToUpdate.setWeight(synapseToUpdate.getWeight() + config.c() + kPerN);
+            }
         }
     }
 
