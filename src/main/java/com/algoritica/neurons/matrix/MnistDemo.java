@@ -11,6 +11,7 @@ import com.google.common.io.Resources;
  * (e.g. 0->0, 253->1, 15->1, etc.). This *may* make it  more difficult for the matrix to differentiate certain characters.
  *
  * One thing to try would be to simply use the value of the input instead of k/N when updating the weights, and get rid of c.
+ * -- this was tried and resulted in a 62.04% accuracy
  *
  * Another thing to try would be to perhaps try to stack another synaptic matrix or two together,
  * and create a "deep" synaptic matrix.
