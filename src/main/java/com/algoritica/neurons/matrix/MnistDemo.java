@@ -41,7 +41,7 @@ public class MnistDemo {
             int current = i + 1;
             mnistManager.setCurrent(current);
             int[][] image = mnistManager.readImage();
-            int[] input = toLinearArray(image);
+            int[] input =  MatrixUtils.toLinearArray(image);
             int label = mnistManager.readLabel();
             System.out.println("training with training example #" + current + " (label: " + label + ")");
             synapticMatrix.train(input, label);
@@ -50,46 +50,9 @@ public class MnistDemo {
         System.out.println("------------------------");
 
         //evaluate
-        imagesFile = Resources.getResource("mnist-handwritten/t10k-images.idx3-ubyte").getFile();
-        labelsFile = Resources.getResource("mnist-handwritten/t10k-labels.idx1-ubyte").getFile();
-        mnistManager = new MnistManager(imagesFile, labelsFile);
-        int numCorrect = 0;
-        for (int i = 0; i < 10000; i++) {
-            int current = i + 1;
-            mnistManager.setCurrent(current);
-            int[][] image = mnistManager.readImage();
-            int[] input = toLinearArray(image);
-            int label = mnistManager.readLabel();
-            System.out.println("evaluating for test example #" + current + "(label: " + label + ")...");
-            int[] relativeSpikeFrequencies = synapticMatrix.evaluate(input);
-
-            int highestRelativeSpikeFrequency = 0;
-            int predictedClass = 0;
-            for (int c = 0; c < relativeSpikeFrequencies.length; c++) {
-                System.out.println("  Class " + c + ": " + relativeSpikeFrequencies[c]);
-                if (relativeSpikeFrequencies[c] > highestRelativeSpikeFrequency) {
-                    highestRelativeSpikeFrequency = relativeSpikeFrequencies[c];
-                    predictedClass = c;
-                }
-            }
-            System.out.println("predicted class: " + predictedClass);
-            if (predictedClass == label) {
-                numCorrect++;
-            }
-        }
+        int numCorrect = MatrixUtils.evaluateMNIST(synapticMatrix, true);
 
         System.out.println("------------------------");
         System.out.println("number of correct predictions: " + numCorrect + " (out of 10,000)");
-    }
-
-    private static int[] toLinearArray(int[][] arr) {
-        int[] linearArray = new int[arr.length * arr[0].length];
-        int pos = 0;
-        for (int i = 0; i < arr.length; i++) {
-            for (int k = 0; k < arr[i].length; k++) {
-                linearArray[pos++] = arr[i][k];
-            }
-        }
-        return linearArray;
     }
 }
