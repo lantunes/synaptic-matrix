@@ -19,6 +19,13 @@ import com.google.common.io.Resources;
  * up to a master matrix.
  *
  * We can also try to understand what Trehub means by introducing an Imaging Matrix in addition to the Detection Matrix.
+ *
+ * Part of the problem may be that the digits are not scaled and/or centered the same way across the examples.
+ * Indeed, Trehub uses a retinoid that attempts to translate the example to the normal foveal axis before learning.
+ * However, this was on the web:
+ *   '...for the MNIST digit classification problem we've been studying, the images are centered
+ *    and size-normalized. So MNIST has less translation invariance than images found "in the wild", so
+ *    to speak. Still, features like edges and corners are likely to be useful across much of the input space.'
  */
 public class MnistDemo {
 
