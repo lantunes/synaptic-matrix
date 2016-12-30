@@ -8,71 +8,66 @@ import java.util.List;
  */
 public class SynapticMatrix {
 
-    private final int numInputCells;
-    private final int numClassCells;
     private final SynapticConfig config;
-    private final InputCell[] inputCells;
-    private final ClassCell[] classCells;
+    private final List<InputCell> inputCells;
+    private final List<ClassCell> classCells;
 
-    public SynapticMatrix(int numInputCells, int numClassCells, SynapticConfig config) {
+    public SynapticMatrix(int numInputCells, int initialNumClassCells, SynapticConfig config) {
         if (numInputCells < 1) {
             throw new IllegalArgumentException("there must be at least 1 input cell");
         }
-        if (numClassCells < 1) {
-            throw new IllegalArgumentException("there must be at least 1 class cell");
-        }
 
-        this.numInputCells = numInputCells;
-        this.numClassCells = numClassCells;
-        this.inputCells = new InputCell[numInputCells];
-        this.classCells = new ClassCell[numClassCells];
+        this.inputCells = new ArrayList<>(numInputCells);
+        this.classCells = new ArrayList<>(initialNumClassCells);
         this.config = config;
 
-        construct();
+        construct(numInputCells, initialNumClassCells);
     }
 
-    private void construct() {
+    private void construct(int numInputCells, int initialNumClassCells) {
         for (int i = 0; i < numInputCells; i++) {
-            inputCells[i] = new InputCell("#" + (i+1));
-            for (int c = 0; c < numClassCells; c++) {
-                if (classCells[c] == null) {
-                    classCells[c] = new ClassCell("#" + (c+1));
+            inputCells.add(new InputCell("#" + (i+1)));
+            for (int c = 0; c < initialNumClassCells; c++) {
+                if (!indexExists(classCells, c)) {
+                    classCells.add(new ClassCell("#" + (c+1)));
                 }
-                Synapse s = new Synapse(config.b(), inputCells[i], classCells[c]);
-                inputCells[i].addAxonalSynapse(s);
-                classCells[c].addDendriticSynapse(s);
+                Synapse s = new Synapse(config.b(), inputCells.get(i), classCells.get(c));
+                inputCells.get(i).addAxonalSynapse(s);
+                classCells.get(c).addDendriticSynapse(s);
             }
         }
     }
 
-    /*
-     * each item in the array is an example input corresponding to each class
-     * e.g. given a = [[0,1],[1,0]],
-     *   a[0] is the example input for class cell 0,
-     *   a[1] is the example input for class cell 1
-     */
-    public void train(int[][] examples) {
-        if (examples.length < 1) {
-            throw new IllegalArgumentException("there are no examples");
+    private void addNewClassCell() {
+        ClassCell newClassCell = new ClassCell("#" + (classCells.size() + 1));
+        for (int i = 0; i < inputCells.size(); i++) {
+            Synapse s = new Synapse(config.b(), inputCells.get(i), newClassCell);
+            inputCells.get(i).addAxonalSynapse(s);
+            newClassCell.addDendriticSynapse(s);
         }
-        if (examples.length != numClassCells) {
-            throw new IllegalArgumentException("the number of examples must be the same as the number of class cells");
-        }
+        classCells.add(newClassCell);
+    }
 
-        for (int e = 0; e < examples.length; e++) {
-            train(examples[e], e);
-        }
+    /*
+     * Adds a new class cell to the end of the list of class cells, trained on the input example.
+     * Returns the index of the newly added class cell.
+     */
+    public int train(int[] inputExample) {
+        addNewClassCell();
+        int classCell = classCells.size() - 1;
+        train(inputExample, classCell);
+        return classCell;
     }
 
     public void train(int[] inputExample, int classCell) {
-        if (inputExample.length != numInputCells) {
+        if (inputExample.length != inputCells.size()) {
             throw new IllegalArgumentException("the number of inputs in example " + classCell +
                     " does not equal the number of input cells");
         }
 
         List<Synapse> eligibleSynapses = new ArrayList<>();
         for (int i = 0; i < inputExample.length; i++) {
-            InputCell inputCell = inputCells[i];
+            InputCell inputCell = inputCells.get(i);
             int input = inputExample[i];
             Synapse synapse = inputCell.getSynapse(classCell);
             if (input * synapse.getWeight() > 0) {
@@ -88,14 +83,18 @@ public class SynapticMatrix {
     }
 
     public int[] evaluate(int[] input) {
-        if (input.length != numInputCells) {
+        if (input.length != inputCells.size()) {
             throw new IllegalArgumentException("the number of inputs does not equal the number of input cells");
         }
 
-        int[] relativeSpikeFrequencies = new int[numClassCells];
-        for (int c = 0; c < numClassCells; c++) {
-            relativeSpikeFrequencies[c] = classCells[c].activate(input);
+        int[] relativeSpikeFrequencies = new int[classCells.size()];
+        for (int c = 0; c < classCells.size(); c++) {
+            relativeSpikeFrequencies[c] = classCells.get(c).activate(input);
         }
         return relativeSpikeFrequencies;
+    }
+
+    private boolean indexExists(final List list, final int index) {
+        return index >= 0 && index < list.size();
     }
 }
