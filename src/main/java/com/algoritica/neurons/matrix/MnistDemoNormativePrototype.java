@@ -26,6 +26,10 @@ import com.google.common.io.Resources;
  *   '...for the MNIST digit classification problem we've been studying, the images are centered
  *    and size-normalized. So MNIST has less translation invariance than images found "in the wild", so
  *    to speak. Still, features like edges and corners are likely to be useful across much of the input space.'
+ *
+ * Another issue may be that there are not an even number of examples for each class. And since the weights aren't
+ * normalized, some patterns tend to have just that much more weight by virtue of the fact that they are relatively,
+ * and slightly, over-represented.
  */
 public class MnistDemoNormativePrototype {
 
