@@ -33,7 +33,7 @@ public class MnistDemoByAddingClassCells {
 
     public static void main(String[] args) throws Exception {
 
-        SynapticMatrix synapticMatrix = new SynapticMatrix(784, 0, new SynapticConfig(1, 20, 1500));
+        SynapticMatrix synapticMatrix = new BasicSynapticMatrix(784, 0, new SynapticConfig(1, 20, 1500));
 
         //map of labels to the indices of the class cells that correspond to them
         Map<Integer, List<Integer>> labelToClassCells = new HashMap<>();

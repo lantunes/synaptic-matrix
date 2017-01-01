@@ -4,7 +4,7 @@ public class XORDemo {
 
     public static void main(String[] args) throws Exception {
 
-        SynapticMatrix synapticMatrix = new SynapticMatrix(2, 0, new SynapticConfig(1, 2, 18));
+        SynapticMatrix synapticMatrix = new BasicSynapticMatrix(2, 0, new SynapticConfig(1, 2, 18));
 
         int xorClassCell1 = synapticMatrix.train(new int[]{1,0});
         int xorClassCell2 = synapticMatrix.train(new int[]{0,1});

@@ -35,7 +35,7 @@ public class MnistDemoNormativePrototype {
 
     public static void main(String[] args) throws Exception {
 
-        SynapticMatrix synapticMatrix = new SynapticMatrix(784, 10, new SynapticConfig(1, 20, 1500));
+        SynapticMatrix synapticMatrix = new BasicSynapticMatrix(784, 10, new SynapticConfig(1, 20, 1500));
 
         //train
         String imagesFile = Resources.getResource("mnist-handwritten/train-images.idx3-ubyte").getFile();
