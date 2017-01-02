@@ -10,7 +10,7 @@ import java.io.IOException;
  * number of rows and columns per each entry.
  *
  */
-public class MnistImageFile extends MnistDbFile {
+public class MNISTImageFile extends MNISTDbFile {
     private int rows;
     private int cols;
 
@@ -24,7 +24,7 @@ public class MnistImageFile extends MnistDbFile {
      * @throws IOException
      * @throws FileNotFoundException
      */
-    public MnistImageFile(String name, String mode) throws FileNotFoundException, IOException {
+    public MNISTImageFile(String name, String mode) throws FileNotFoundException, IOException {
         super(name, mode);
 
         // read header information

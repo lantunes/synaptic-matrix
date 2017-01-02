@@ -9,7 +9,7 @@ import java.io.IOException;
  * MNIST database label file.
  *
  */
-public class MnistLabelFile extends MnistDbFile {
+public class MNISTLabelFile extends MNISTDbFile {
 
     /**
      * Creates new MNIST database label file ready for reading.
@@ -21,7 +21,7 @@ public class MnistLabelFile extends MnistDbFile {
      * @throws IOException
      * @throws FileNotFoundException
      */
-    public MnistLabelFile(String name, String mode) throws FileNotFoundException, IOException {
+    public MNISTLabelFile(String name, String mode) throws FileNotFoundException, IOException {
         super(name, mode);
     }
 

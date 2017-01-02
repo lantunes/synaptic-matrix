@@ -17,16 +17,16 @@ import java.io.IOException;
  * <p>
  * Example usage:
  * <pre>
- *  MnistManager m = new MnistManager("t10k-images.idx3-ubyte", "t10k-labels.idx1-ubyte");
+ *  MNISTManager m = new MNISTManager("t10k-images.idx3-ubyte", "t10k-labels.idx1-ubyte");
  *  m.setCurrent(10); //index of the image that we are interested in
  *  int[][] image = m.readImage();
  *  System.out.println("Label:" + m.readLabel());
- *  MnistManager.writeImageToPpm(image, "10.ppm");
+ *  MNISTManager.writeImageToPpm(image, "10.ppm");
  * </pre>
  */
-public class MnistManager {
-    private MnistImageFile images;
-    private MnistLabelFile labels;
+public class MNISTManager {
+    private MNISTImageFile images;
+    private MNISTLabelFile labels;
 
     /**
      * Writes the given image in the given file using the PPM data format.
@@ -70,12 +70,12 @@ public class MnistManager {
      *            using that file will fail.
      * @throws IOException
      */
-    public MnistManager(String imagesFile, String labelsFile) throws IOException {
+    public MNISTManager(String imagesFile, String labelsFile) throws IOException {
         if (imagesFile != null) {
-            images = new MnistImageFile(imagesFile, "r");
+            images = new MNISTImageFile(imagesFile, "r");
         }
         if (labelsFile != null) {
-            labels = new MnistLabelFile(labelsFile, "r");
+            labels = new MNISTLabelFile(labelsFile, "r");
         }
     }
 
@@ -116,20 +116,20 @@ public class MnistManager {
     }
 
     /**
-     * Get the underlying images file as {@link MnistImageFile}.
+     * Get the underlying images file as {@link MNISTImageFile}.
      *
-     * @return {@link MnistImageFile}.
+     * @return {@link MNISTImageFile}.
      */
-    public MnistImageFile getImages() {
+    public MNISTImageFile getImages() {
         return images;
     }
 
     /**
-     * Get the underlying labels file as {@link MnistLabelFile}.
+     * Get the underlying labels file as {@link MNISTLabelFile}.
      *
-     * @return {@link MnistLabelFile}.
+     * @return {@link MNISTLabelFile}.
      */
-    public MnistLabelFile getLabels() {
+    public MNISTLabelFile getLabels() {
         return labels;
     }
 }

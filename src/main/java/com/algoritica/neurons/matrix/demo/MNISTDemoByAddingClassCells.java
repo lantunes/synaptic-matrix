@@ -24,10 +24,10 @@ import com.algoritica.neurons.matrix.SynapticConfig;
  * With b=1, c=20, and k=1500, this synaptic matrix achieves a classification accuracy of 89.05%.
  * Might this be improved by using a retinoid/centroid, and/or by taking into account the grayscale values?
  */
-public class MnistDemoByAddingClassCells {
+public class MNISTDemoByAddingClassCells {
 
     public static void main(String[] args) throws Exception {
 
-        MnistDemoRunner.run(new SupervisedSynapticMatrix(784, new SynapticConfig(1, 20, 1500)));
+        MNISTDemoRunner.run(new SupervisedSynapticMatrix(784, new SynapticConfig(1, 20, 1500)));
     }
 }

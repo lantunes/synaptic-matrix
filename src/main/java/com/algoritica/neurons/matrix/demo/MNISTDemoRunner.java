@@ -2,20 +2,20 @@ package com.algoritica.neurons.matrix.demo;
 
 import com.algoritica.neurons.matrix.MatrixUtils;
 import com.algoritica.neurons.matrix.SynapticMatrix;
-import com.algoritica.neurons.mnist.MnistManager;
+import com.algoritica.neurons.mnist.MNISTManager;
 import com.google.common.io.Resources;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class MnistDemoRunner {
+public class MNISTDemoRunner {
 
-    private static final Logger logger = LoggerFactory.getLogger(MnistDemoRunner.class);
+    private static final Logger logger = LoggerFactory.getLogger(MNISTDemoRunner.class);
 
     public static void run(SynapticMatrix synapticMatrix) throws Exception {
         //train
         String imagesFile = Resources.getResource("mnist-handwritten/train-images.idx3-ubyte").getFile();
         String labelsFile = Resources.getResource("mnist-handwritten/train-labels.idx1-ubyte").getFile();
-        MnistManager mnistManager = new MnistManager(imagesFile, labelsFile);
+        MNISTManager mnistManager = new MNISTManager(imagesFile, labelsFile);
         for (int i = 0; i < 60000; i++) {
             int current = i + 1;
             mnistManager.setCurrent(current);
@@ -38,7 +38,7 @@ public class MnistDemoRunner {
     private static int evaluateMNIST(SynapticMatrix synapticMatrix) throws Exception {
         String imagesFile = Resources.getResource("mnist-handwritten/t10k-images.idx3-ubyte").getFile();
         String labelsFile = Resources.getResource("mnist-handwritten/t10k-labels.idx1-ubyte").getFile();
-        MnistManager mnistManager = new MnistManager(imagesFile, labelsFile);
+        MNISTManager mnistManager = new MNISTManager(imagesFile, labelsFile);
         int numCorrect = 0;
         for (int i = 0; i < 10000; i++) {
             int current = i + 1;

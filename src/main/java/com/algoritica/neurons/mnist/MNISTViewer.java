@@ -10,7 +10,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class MnistViewer extends Application {
+public class MNISTViewer extends Application {
 
     public static void main(String[] args) {
         launch(args);
@@ -59,7 +59,7 @@ public class MnistViewer extends Application {
                         imagesFile = Resources.getResource("mnist-handwritten/t10k-images.idx3-ubyte").getFile();
                         labelsFile = Resources.getResource("mnist-handwritten/t10k-labels.idx1-ubyte").getFile();
                     }
-                    MnistManager mnistManager = new MnistManager(imagesFile, labelsFile);
+                    MNISTManager mnistManager = new MNISTManager(imagesFile, labelsFile);
 
                     mnistManager.setCurrent(Integer.parseInt(exampleField.getText()));
                     int[][] image = mnistManager.readImage();

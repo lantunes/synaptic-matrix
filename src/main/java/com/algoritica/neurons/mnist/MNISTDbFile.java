@@ -13,7 +13,7 @@ import java.io.RandomAccessFile;
  * information. This includes a magic number for determining the type of stored
  * entries, count of entries.
  */
-public abstract class MnistDbFile extends RandomAccessFile {
+public abstract class MNISTDbFile extends RandomAccessFile {
     private int count;
 
 
@@ -28,7 +28,7 @@ public abstract class MnistDbFile extends RandomAccessFile {
      * @throws FileNotFoundException
      * @see RandomAccessFile
      */
-    public MnistDbFile(String name, String mode) throws IOException, FileNotFoundException {
+    public MNISTDbFile(String name, String mode) throws IOException, FileNotFoundException {
         super(name, mode);
         if (getMagicNumber() != readInt()) {
             throw new RuntimeException("This MNIST DB file " + name + " should start with the number " + getMagicNumber() + ".");

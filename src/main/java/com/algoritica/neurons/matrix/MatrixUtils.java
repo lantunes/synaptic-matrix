@@ -1,8 +1,5 @@
 package com.algoritica.neurons.matrix;
 
-import com.algoritica.neurons.mnist.MnistManager;
-import com.google.common.io.Resources;
-
 public class MatrixUtils {
 
     public static int[] toLinearArray(int[][] arr) {

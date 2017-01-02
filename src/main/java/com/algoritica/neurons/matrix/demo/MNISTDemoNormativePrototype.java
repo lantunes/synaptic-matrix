@@ -31,10 +31,10 @@ import com.algoritica.neurons.matrix.SynapticConfig;
  * normalized, some patterns tend to have just that much more weight by virtue of the fact that they are relatively,
  * and slightly, over-represented.
  */
-public class MnistDemoNormativePrototype {
+public class MNISTDemoNormativePrototype {
 
     public static void main(String[] args) throws Exception {
 
-        MnistDemoRunner.run(new BasicSynapticMatrix(784, 10, new SynapticConfig(1, 20, 1500)));
+        MNISTDemoRunner.run(new BasicSynapticMatrix(784, 10, new SynapticConfig(1, 20, 1500)));
     }
 }
