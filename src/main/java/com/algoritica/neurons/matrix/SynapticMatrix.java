@@ -3,7 +3,7 @@ package com.algoritica.neurons.matrix;
 /**
  * A synaptic matrix based on the work of Arnold Trehub.
  */
-public interface SimpleSynapticMatrix {
+public interface SynapticMatrix {
 
     /**
      * Adds a new class cell to the end of the list of class cells, trained on the input example.

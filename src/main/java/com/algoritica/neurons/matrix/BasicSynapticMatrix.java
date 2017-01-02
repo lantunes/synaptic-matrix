@@ -3,7 +3,7 @@ package com.algoritica.neurons.matrix;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BasicSynapticMatrix implements SimpleSynapticMatrix {
+public class BasicSynapticMatrix implements SynapticMatrix {
 
     private final SynapticConfig config;
     private final List<InputCell> inputCells;

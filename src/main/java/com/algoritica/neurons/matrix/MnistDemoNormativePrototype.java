@@ -1,8 +1,5 @@
 package com.algoritica.neurons.matrix;
 
-import com.algoritica.neurons.mnist.MnistManager;
-import com.google.common.io.Resources;
-
 /**
  * With b=1, c=20, and k=1500, this synaptic matrix achieves a classification accuracy of 71.19%.
  * The images in the MNIST data set are not black and white--they contain grey levels
@@ -35,61 +32,6 @@ public class MnistDemoNormativePrototype {
 
     public static void main(String[] args) throws Exception {
 
-        SimpleSynapticMatrix synapticMatrix = new BasicSynapticMatrix(784, 10, new SynapticConfig(1, 20, 1500));
-
-        //train
-        String imagesFile = Resources.getResource("mnist-handwritten/train-images.idx3-ubyte").getFile();
-        String labelsFile = Resources.getResource("mnist-handwritten/train-labels.idx1-ubyte").getFile();
-        MnistManager mnistManager = new MnistManager(imagesFile, labelsFile);
-        for (int i = 0; i < 60000; i++) {
-            int current = i + 1;
-            mnistManager.setCurrent(current);
-            int[][] image = mnistManager.readImage();
-            int[] input =  MatrixUtils.toLinearArray(image);
-            int label = mnistManager.readLabel();
-            System.out.println("training with training example #" + current + " (label: " + label + ")");
-            synapticMatrix.train(input, label);
-        }
-
-        System.out.println("------------------------");
-
-        //evaluate
-        int numCorrect = evaluateMNIST(synapticMatrix, true);
-
-        System.out.println("------------------------");
-        System.out.println("number of correct predictions: " + numCorrect + " (out of 10,000)");
-    }
-
-    private static int evaluateMNIST(SimpleSynapticMatrix synapticMatrix, boolean verbose) throws Exception {
-        String imagesFile = Resources.getResource("mnist-handwritten/t10k-images.idx3-ubyte").getFile();
-        String labelsFile = Resources.getResource("mnist-handwritten/t10k-labels.idx1-ubyte").getFile();
-        MnistManager mnistManager = new MnistManager(imagesFile, labelsFile);
-        int numCorrect = 0;
-        for (int i = 0; i < 10000; i++) {
-            int current = i + 1;
-            mnistManager.setCurrent(current);
-            int[][] image = mnistManager.readImage();
-            int[] input = MatrixUtils.toLinearArray(image);
-            int label = mnistManager.readLabel();
-            System.out.println("evaluating for test example #" + current + "(label: " + label + ")...");
-            int[] relativeSpikeFrequencies = synapticMatrix.evaluate(input);
-
-            int highestRelativeSpikeFrequency = 0;
-            int predictedClass = 0;
-            for (int c = 0; c < relativeSpikeFrequencies.length; c++) {
-                if (verbose) {
-                    System.out.println("  Class " + c + ": " + relativeSpikeFrequencies[c]);
-                }
-                if (relativeSpikeFrequencies[c] > highestRelativeSpikeFrequency) {
-                    highestRelativeSpikeFrequency = relativeSpikeFrequencies[c];
-                    predictedClass = c;
-                }
-            }
-            System.out.println("predicted class: " + predictedClass);
-            if (predictedClass == label) {
-                numCorrect++;
-            }
-        }
-        return numCorrect;
+        MnistDemoRunner.run(new BasicSynapticMatrix(784, 10, new SynapticConfig(1, 20, 1500)));
     }
 }
