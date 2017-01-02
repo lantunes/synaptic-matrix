@@ -4,7 +4,7 @@ public class DemoWithOneExamplePerClass {
 
     public static void main(String[] args) throws Exception {
 
-        SynapticMatrix synapticMatrix = new BasicSynapticMatrix(9, 2, new SynapticConfig(1, 2, 10));
+        SimpleSynapticMatrix synapticMatrix = new BasicSynapticMatrix(9, 2, new SynapticConfig(1, 2, 10));
 
         synapticMatrix.train(
                 new int[]{0,1,0,

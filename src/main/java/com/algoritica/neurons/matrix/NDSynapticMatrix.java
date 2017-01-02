@@ -10,7 +10,7 @@ import org.nd4j.linalg.util.ArrayUtil;
  * Performance appears worse than the BasicSynapticMatrix, and there are problems coming up with the
  * correct frequencies, as of Jan. 1 2017.
  */
-public class NDSynapticMatrix implements SynapticMatrix {
+public class NDSynapticMatrix implements SimpleSynapticMatrix {
 
     private final SynapticConfig config;
 

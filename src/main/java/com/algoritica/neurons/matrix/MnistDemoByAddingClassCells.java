@@ -33,7 +33,7 @@ public class MnistDemoByAddingClassCells {
 
     public static void main(String[] args) throws Exception {
 
-        SynapticMatrix synapticMatrix = new BasicSynapticMatrix(784, 0, new SynapticConfig(1, 20, 1500));
+        SimpleSynapticMatrix synapticMatrix = new BasicSynapticMatrix(784, 0, new SynapticConfig(1, 20, 1500));
 
         //map of labels to the indices of the class cells that correspond to them
         Map<Integer, List<Integer>> labelToClassCells = new HashMap<>();
@@ -102,7 +102,7 @@ public class MnistDemoByAddingClassCells {
         }
     }
 
-    public static int evaluateMNIST(SynapticMatrix synapticMatrix, Map<Integer, List<Integer>> labelToClassCells) throws Exception {
+    public static int evaluateMNIST(SimpleSynapticMatrix synapticMatrix, Map<Integer, List<Integer>> labelToClassCells) throws Exception {
         String imagesFile = Resources.getResource("mnist-handwritten/t10k-images.idx3-ubyte").getFile();
         String labelsFile = Resources.getResource("mnist-handwritten/t10k-labels.idx1-ubyte").getFile();
         MnistManager mnistManager = new MnistManager(imagesFile, labelsFile);

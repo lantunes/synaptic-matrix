@@ -35,7 +35,7 @@ public class MnistDemoNormativePrototype {
 
     public static void main(String[] args) throws Exception {
 
-        SynapticMatrix synapticMatrix = new BasicSynapticMatrix(784, 10, new SynapticConfig(1, 20, 1500));
+        SimpleSynapticMatrix synapticMatrix = new BasicSynapticMatrix(784, 10, new SynapticConfig(1, 20, 1500));
 
         //train
         String imagesFile = Resources.getResource("mnist-handwritten/train-images.idx3-ubyte").getFile();
@@ -60,7 +60,7 @@ public class MnistDemoNormativePrototype {
         System.out.println("number of correct predictions: " + numCorrect + " (out of 10,000)");
     }
 
-    private static int evaluateMNIST(SynapticMatrix synapticMatrix, boolean verbose) throws Exception {
+    private static int evaluateMNIST(SimpleSynapticMatrix synapticMatrix, boolean verbose) throws Exception {
         String imagesFile = Resources.getResource("mnist-handwritten/t10k-images.idx3-ubyte").getFile();
         String labelsFile = Resources.getResource("mnist-handwritten/t10k-labels.idx1-ubyte").getFile();
         MnistManager mnistManager = new MnistManager(imagesFile, labelsFile);
