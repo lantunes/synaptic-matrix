@@ -1,5 +1,7 @@
-package com.algoritica.neurons.matrix;
+package com.algoritica.neurons.matrix.demo;
 
+import com.algoritica.neurons.matrix.MatrixUtils;
+import com.algoritica.neurons.matrix.SynapticMatrix;
 import com.algoritica.neurons.mnist.MnistManager;
 import com.google.common.io.Resources;
 import org.slf4j.Logger;

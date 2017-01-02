@@ -1,4 +1,7 @@
-package com.algoritica.neurons.matrix;
+package com.algoritica.neurons.matrix.demo;
+
+import com.algoritica.neurons.matrix.BasicSynapticMatrix;
+import com.algoritica.neurons.matrix.SynapticConfig;
 
 /**
  * With b=1, c=20, and k=1500, this synaptic matrix achieves a classification accuracy of 71.19%.

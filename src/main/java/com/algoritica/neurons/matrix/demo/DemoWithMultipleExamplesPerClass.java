@@ -1,4 +1,8 @@
-package com.algoritica.neurons.matrix;
+package com.algoritica.neurons.matrix.demo;
+
+import com.algoritica.neurons.matrix.BasicSynapticMatrix;
+import com.algoritica.neurons.matrix.SynapticConfig;
+import com.algoritica.neurons.matrix.SynapticMatrix;
 
 public class DemoWithMultipleExamplesPerClass {
 

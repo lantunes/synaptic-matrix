@@ -1,4 +1,7 @@
-package com.algoritica.neurons.matrix;
+package com.algoritica.neurons.matrix.demo;
+
+import com.algoritica.neurons.matrix.SupervisedSynapticMatrix;
+import com.algoritica.neurons.matrix.SynapticConfig;
 
 /*
  * This demo emulates the way Trehub classified hand-written digits, as described in
