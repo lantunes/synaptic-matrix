@@ -21,13 +21,40 @@ import com.algoritica.neurons.matrix.SynapticConfig;
  * we would end up with what Trehub calls some "normative prototype" (see pages 199-200 of The Cognitive Brain).
  * He claims the procedure described in this demo is superior.
  *
- * With b=1, c=20, and k=1500, this synaptic matrix achieves a classification accuracy of 89.05%.
+ * b  c   k     accuracy
+ * ---------------------
+ * 1  20  1000  ~87%
+ * 1  20  1500  89.05%
+ * 1  20  2000  91.38%
+ * 1  20  2500  91.67%
+ * 1  20  3000  92.14%
+ * 1  20  3500  92.61%
+ * 1  20  3700  92.66%
+ * 1  5   4000  91.41%
+ * 1  20  4000  92.87%
+ * 1  100 4000  86.02%
+ * 1  20  4100  92.77%
+ * 1  10  4200  92.30%
+ * 1  14  4200  92.53%
+ * 1  15  4200  93.05% **
+ * 1  16  4200  93.05%
+ * 1  18  4200  92.91%
+ * 1  20  4200  92.88%
+ * 1  25  4200  92.69%
+ * 1  20  4300  92.42%
+ * 1  20  4500  92.66%
+ * 1  20  5000  92.79%
+ * 1  20  6000  92.55%
+ * 1  20  10000 92.42%
+ * 1  20  70000 88.35%
+ * With b=1, c=15, and k=4200, this synaptic matrix achieves a classification accuracy of 93.05%.
+ *
  * Might this be improved by using a retinoid/centroid, and/or by taking into account the grayscale values?
  */
 public class MNISTDemoByAddingClassCells {
 
     public static void main(String[] args) throws Exception {
 
-        MNISTDemoRunner.run(new SupervisedSynapticMatrix(784, new SynapticConfig(1, 20, 1500)));
+        MNISTDemoRunner.run(new SupervisedSynapticMatrix(784, new SynapticConfig(1, 15, 4200)));
     }
 }
