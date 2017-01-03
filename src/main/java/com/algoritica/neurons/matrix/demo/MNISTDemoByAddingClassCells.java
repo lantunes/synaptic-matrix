@@ -38,6 +38,7 @@ import com.algoritica.neurons.matrix.SynapticConfig;
  * 1  14  4200  92.53%
  * 1  15  4200  93.05% **
  * 1  16  4200  93.05%
+ * 1  17  4200  92.89%
  * 1  18  4200  92.91%
  * 1  20  4200  92.88%
  * 1  25  4200  92.69%
@@ -55,6 +56,6 @@ public class MNISTDemoByAddingClassCells {
 
     public static void main(String[] args) throws Exception {
 
-        MNISTDemoRunner.run(new SupervisedSynapticMatrix(784, new SynapticConfig(1, 15, 4200)));
+        MNISTDemoRunner.run(new SupervisedSynapticMatrix(784, new SynapticConfig(1, 17, 4200)));
     }
 }
