@@ -56,6 +56,6 @@ public class MNISTDemoByAddingClassCells {
 
     public static void main(String[] args) throws Exception {
 
-        MNISTDemoRunner.run(new SupervisedSynapticMatrix(784, new SynapticConfig(1, 17, 4200)));
+        MNISTDemoRunner.run(new SupervisedSynapticMatrix(784, new SynapticConfig(1, 15, 4200)));
     }
 }
