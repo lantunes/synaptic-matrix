@@ -36,7 +36,10 @@ import com.algoritica.neurons.matrix.SynapticConfig;
  * 1  20  4100  92.77%
  * 1  10  4200  92.30%
  * 1  14  4200  92.53%
+ * 1  15  4150  92.51%
  * 1  15  4200  93.05% **
+ * 1  15  4225  92.56%
+ * 1  15  4250  92.84%
  * 1  16  4200  93.05%
  * 1  17  4200  92.89%
  * 1  18  4200  92.91%
@@ -57,5 +60,21 @@ public class MNISTDemoByAddingClassCells {
     public static void main(String[] args) throws Exception {
 
         MNISTDemoRunner.run(new SupervisedSynapticMatrix(784, new SynapticConfig(1, 15, 4200)));
+
+        /*
+         * when adding S into the equation:
+         * b  c   k     Lim      accuracy  normalizing input during activation?
+         * --------------------------------------------------------------------
+         * 1  15  1500  -        87.91%    no
+         * 1  20  4000  -        88.33%    no
+         * 1  15  4200  -        89.73%    no
+         * 1  15  4200  -        86.44%    yes^
+         * 1  15  5000  -        89.08%    no
+         * 1  15  4200  5000     72.49%    no
+         * 1  15  4200  9000     89.01%    no
+         * 1  15  4200  10000^^  89.31%    no
+         * ^it appears that if we add S into the weight, we can't normalize the input during evaluation
+         * ^^the highest weights seen when there is not Limit are just above 10000
+         */
     }
 }
