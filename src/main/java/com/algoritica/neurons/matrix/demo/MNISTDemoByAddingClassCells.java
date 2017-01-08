@@ -76,5 +76,15 @@ public class MNISTDemoByAddingClassCells {
          * ^it appears that if we add S into the weight, we can't normalize the input during evaluation
          * ^^the highest weights seen when there is not Limit are just above 10000
          */
+
+        /*
+         * when diluting (i.e. reducing) the number of synaptic connections per class cell, randomly for each class cell
+         * b  c  k     synaptic dilution  accuracy
+         * ---------------------------------------
+         * 1  15 4200  10%                92.11%       (~10% more class cells after training)
+         * 1  15 3800  10%                92.31%       (~10% more class cells after training)
+         * 1  15 4200  35%                90.58%       (~35% more class cells after training)
+         * 1  15 2700  35%                90.17%       (~35% more class cells after training)
+         */
     }
 }
