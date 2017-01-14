@@ -14,11 +14,9 @@ import org.algoritica.neurons.matrix.SynapticConfig;
  * -- this was tried and resulted in a 62.04% accuracy
  *
  * Another thing to try would be to perhaps try to stack another synaptic matrix or two together,
- * and create a "deep" synaptic matrix. We can try to create a convolutional synaptic matrix. We can create a number of
+ * and create a "deep" synaptic matrix. We can try to create a kind of convolutional synaptic matrix. We can create a number of
  * synaptic matrices of smaller size that correspond to smaller, overlapping regions of the image. These matrices feed
  * up to a master matrix.
- *
- * We can also try to understand what Trehub means by introducing an Imaging Matrix in addition to the Detection Matrix.
  *
  * Part of the problem may be that the digits are not scaled and/or centered the same way across the examples.
  * Indeed, Trehub uses a retinoid that attempts to translate the example to the normal foveal axis before learning.

@@ -54,8 +54,6 @@ import org.algoritica.neurons.matrix.SynapticConfig;
  * 1  20  10000 92.42%
  * 1  20  70000 88.35%
  * With b=1, c=15, and k=4200, this synaptic matrix achieves a classification accuracy of 93.05%.
- *
- * Might this be improved by using a retinoid/centroid, and/or by taking into account the grayscale values?
  */
 public class MNISTDemoByAddingClassCells {
 
@@ -87,7 +85,9 @@ public class MNISTDemoByAddingClassCells {
          * 1  15 3800  10%                92.31%       (~10% more class cells after training)
          * 1  15 4200  35%                90.58%       (~35% more class cells after training)
          * 1  15 2700  35%                90.17%       (~35% more class cells after training)
-		 *
+		 */
+
+        /*
 		 * when using double instead of long for the weight, accuracy is only ~86%
          */
     }
