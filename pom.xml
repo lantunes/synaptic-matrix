@@ -97,7 +97,7 @@
             <argument>-classpath</argument> <classpath/>
 
             <!-- RandomNeuronPixels class -->
-            <argument>com.algoritica.neurons.concurrent.Main</argument>
+            <argument>org.algoritica.neurons.concurrent.Main</argument>
           </arguments>
         </configuration>
       </plugin>
