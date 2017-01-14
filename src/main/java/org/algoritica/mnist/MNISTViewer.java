@@ -1,4 +1,4 @@
-package org.algoritica.neurons.mnist;
+package org.algoritica.mnist;
 
 import com.google.common.io.Resources;
 import javafx.application.Application;

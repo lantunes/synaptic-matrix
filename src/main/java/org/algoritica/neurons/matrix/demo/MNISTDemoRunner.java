@@ -2,7 +2,7 @@ package org.algoritica.neurons.matrix.demo;
 
 import org.algoritica.neurons.matrix.MatrixUtils;
 import org.algoritica.neurons.matrix.SynapticMatrix;
-import org.algoritica.neurons.mnist.MNISTManager;
+import org.algoritica.mnist.MNISTManager;
 import com.google.common.io.Resources;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

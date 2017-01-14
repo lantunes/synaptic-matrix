@@ -1,4 +1,4 @@
-package org.algoritica.neurons.mnist;
+package org.algoritica.mnist;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
