@@ -30,6 +30,8 @@ import com.algoritica.neurons.matrix.SynapticConfig;
  * 1  20  3000  92.14%
  * 1  20  3500  92.61%
  * 1  20  3700  92.66%
+ * 1  15  3900  92.63%
+ * 1  15  3920  92.49%
  * 1  5   4000  91.41%
  * 1  20  4000  92.87%
  * 1  100 4000  86.02%
@@ -85,6 +87,8 @@ public class MNISTDemoByAddingClassCells {
          * 1  15 3800  10%                92.31%       (~10% more class cells after training)
          * 1  15 4200  35%                90.58%       (~35% more class cells after training)
          * 1  15 2700  35%                90.17%       (~35% more class cells after training)
+		 *
+		 * when using double instead of long for the weight, accuracy is only ~86%
          */
     }
 }
