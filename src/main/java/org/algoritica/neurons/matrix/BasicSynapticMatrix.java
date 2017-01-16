@@ -1,7 +1,9 @@
 package org.algoritica.neurons.matrix;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.PriorityQueue;
 
 public class BasicSynapticMatrix implements SynapticMatrix {
 
@@ -88,6 +90,28 @@ public class BasicSynapticMatrix implements SynapticMatrix {
             relativeSpikeFrequencies[c] = classCells.get(c).activate(input);
         }
         return relativeSpikeFrequencies;
+    }
+
+    /*
+     * evaluates the input and returns the result as a max-heap
+     */
+    public PriorityQueue<ActivityAndClass> heap(int[] input) {
+        if (input.length != inputCells.size()) {
+            throw new IllegalArgumentException("the number of inputs does not equal the number of input cells");
+        }
+
+        PriorityQueue<ActivityAndClass> maxHeap = new PriorityQueue<>((Comparator<ActivityAndClass>) (o1, o2) -> {
+            /*we're reversing the comparison logic because the PriorityQueue is implemented as a min-heap*/
+            if (o1.getActivity() < o2.getActivity()) return 1;
+            if (o1.getActivity() > o2.getActivity()) return -1;
+            return 0;
+        });
+
+        for (int c = 0; c < classCells.size(); c++) {
+            maxHeap.add(new ActivityAndClass(classCells.get(c).activate(input), c));
+        }
+
+        return maxHeap;
     }
 
     private boolean indexExists(final List list, final int index) {

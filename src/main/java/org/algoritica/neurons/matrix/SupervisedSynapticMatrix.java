@@ -3,10 +3,7 @@ package org.algoritica.neurons.matrix;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SupervisedSynapticMatrix implements SynapticMatrix {
 
@@ -14,7 +11,7 @@ public class SupervisedSynapticMatrix implements SynapticMatrix {
 
     private final BasicSynapticMatrix matrix;
 
-    private final Map<Integer, List<Integer>> labelToClassCells = new HashMap<>();
+    private final Map<Integer, Set<Integer>> labelToClassCells = new HashMap<>();
 
     private final Map<Integer, Integer> classCellsToLabels = new HashMap<>();
 
@@ -31,13 +28,13 @@ public class SupervisedSynapticMatrix implements SynapticMatrix {
      * The inputExample must be an array containing only 0s and 1s.
      */
     public void train(int[] example, int label) {
-        int[] relativeSpikeFrequencies = matrix.evaluate(example);
-        int predictedClass = getPredictedClass(relativeSpikeFrequencies);
+        PriorityQueue<ActivityAndClass> heap = matrix.heap(example);
+        int predictedClass = (heap.size() == 0) ? -1 : heap.peek().getClassCellNumber();
 
         if (labelToClassCells.get(label) == null || !labelToClassCells.get(label).contains(predictedClass)) {
             //there was a prediction error; train
             if (labelToClassCells.get(label) == null) {
-                labelToClassCells.put(label, new ArrayList<>());
+                labelToClassCells.put(label, new HashSet<>());
             }
             int classCell = matrix.train(example);
             labelToClassCells.get(label).add(classCell);
@@ -63,32 +60,7 @@ public class SupervisedSynapticMatrix implements SynapticMatrix {
         return relativeSpikeFrequencies;
     }
 
-    private int getPredictedClass(int[] relativeSpikeFrequencies) {
-        if (allElementsTheSame(relativeSpikeFrequencies)) {
-            return -1;
-        }
-        int highestRelativeSpikeFrequency = 0;
-        int predictedClass = 0;
-        for (int c = 0; c < relativeSpikeFrequencies.length; c++) {
-            if (relativeSpikeFrequencies[c] > highestRelativeSpikeFrequency) {
-                highestRelativeSpikeFrequency = relativeSpikeFrequencies[c];
-                predictedClass = c;
-            }
-        }
-        return predictedClass;
-    }
-
-    private boolean allElementsTheSame(int[] array) {
-        if (array.length == 0) {
-            return true;
-        } else {
-            int first = array[0];
-            for (int element : array) {
-                if (element != first) {
-                    return false;
-                }
-            }
-            return true;
-        }
+    public int getNumClassCells() {
+        return classCellsToLabels.keySet().size();
     }
 }

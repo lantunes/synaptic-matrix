@@ -2,6 +2,11 @@ package org.algoritica.neurons.matrix.demo;
 
 import org.algoritica.neurons.matrix.SupervisedSynapticMatrix;
 import org.algoritica.neurons.matrix.SynapticConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /*
  * This demo emulates the way Trehub classified hand-written digits, as described in
@@ -57,9 +62,20 @@ import org.algoritica.neurons.matrix.SynapticConfig;
  */
 public class MNISTDemoByAddingClassCells {
 
+    private static final Logger logger = LoggerFactory.getLogger(MNISTDemoByAddingClassCells.class);
+
+    private static final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
     public static void main(String[] args) throws Exception {
 
-        MNISTDemoRunner.run(new SupervisedSynapticMatrix(784, new SynapticConfig(1, 15, 4200)));
+        String start = df.format(new Date());
+
+        SupervisedSynapticMatrix synapticMatrix = new SupervisedSynapticMatrix(784, new SynapticConfig(1, 15, 4200));
+        MNISTDemoRunner.run(synapticMatrix);
+
+        logger.info("start: " + start);
+        logger.info("# of class cells: " + synapticMatrix.getNumClassCells());
+        logger.info("end: " + df.format(new Date()));
 
         /*
          * when adding S into the equation:
