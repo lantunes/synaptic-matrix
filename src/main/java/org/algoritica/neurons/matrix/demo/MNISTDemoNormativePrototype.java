@@ -2,6 +2,11 @@ package org.algoritica.neurons.matrix.demo;
 
 import org.algoritica.neurons.matrix.BasicSynapticMatrix;
 import org.algoritica.neurons.matrix.SynapticConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * With b=1, c=20, and k=1500, this synaptic matrix achieves a classification accuracy of 71.19%.
@@ -9,6 +14,7 @@ import org.algoritica.neurons.matrix.SynapticConfig;
  * (i.e. instead of 0 and 255, it contains a range of values from 0-255). However, the synaptic matrix algorithm
  * currently ignores the absolute values of the input, and treats all input values as binary
  * (e.g. 0->0, 253->1, 15->1, etc.). This *may* make it  more difficult for the matrix to differentiate certain characters.
+ * -- using b=1, c=15, k=4200 results in 61.94%
  *
  * One thing to try would be to simply use the value of the input instead of k/N when updating the weights, and get rid of c.
  * -- this was tried and resulted in a 62.04% accuracy
@@ -28,11 +34,22 @@ import org.algoritica.neurons.matrix.SynapticConfig;
  * Another issue may be that there are not an even number of examples for each class. And since the weights aren't
  * normalized, some patterns tend to have just that much more weight by virtue of the fact that they are relatively,
  * and slightly, over-represented.
+ *
+ * Using 600,000 training examples (from the InfiniMNIST data set) resulted in 68.68% accuracy.
  */
 public class MNISTDemoNormativePrototype {
 
+    private static final Logger logger = LoggerFactory.getLogger(MNISTDemoNormativePrototype.class);
+
+    private static final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
     public static void main(String[] args) throws Exception {
 
+        String start = df.format(new Date());
+
         MNISTDemoRunner.run(new BasicSynapticMatrix(784, 10, new SynapticConfig(1, 20, 1500)));
+
+        logger.info("start: " + start);
+        logger.info("end: " + df.format(new Date()));
     }
 }
