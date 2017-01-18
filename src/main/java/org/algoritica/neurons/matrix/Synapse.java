@@ -24,7 +24,10 @@ public class Synapse {
         return weight;
     }
 
-    public void setWeight(long weight) {
+    public void setWeight(long weight, long limit) {
+        if (weight > limit) {
+            weight = limit;
+        }
         this.weight = weight;
     }
 

@@ -79,46 +79,42 @@ public class BasicSynapticMatrix implements SynapticMatrix<BasicSynapticMatrix> 
             long kPerN = config.k() / eligibleSynapses.size();
             for (Synapse synapseToUpdate : eligibleSynapses) {
                 long weight = synapseToUpdate.getWeight() + config.c() + kPerN;
-                synapseToUpdate.setWeight(weight);
+                synapseToUpdate.setWeight(weight, weight);
                 addContributionFromDendrodendriticActivation(synapseToUpdate, weight,
-                        config.dendrodendriticContributionLevel());
+                        config.dendrodendriticContributionLevel(), weight);
             }
         }
     }
 
-    private void addContributionFromDendrodendriticActivation(Synapse synapseToUpdate, long weight, int level) {
-        updatePrev(synapseToUpdate, weight, level, new ArrayList<>());
-        updateNext(synapseToUpdate, weight, level, new ArrayList<>());
-        for (int i = 0; i < level; i++) {
-            weight = weight / 2;
-            synapseToUpdate.setWeight(synapseToUpdate.getWeight() + weight);
-        }
+    private void addContributionFromDendrodendriticActivation(Synapse synapseToUpdate, long weight, int level, long maxWeight) {
+        updatePrev(synapseToUpdate, weight, level, new ArrayList<>(), maxWeight);
+        updateNext(synapseToUpdate, weight, level, new ArrayList<>(), maxWeight);
     }
 
-    private void updatePrev(Synapse synapseToUpdate, long weight, int level, List<Synapse> history) {
+    private void updatePrev(Synapse synapseToUpdate, long weight, int level, List<Synapse> history, long maxWeight) {
         if (synapseToUpdate.previous().isPresent() && level > 0) {
             Synapse previous = synapseToUpdate.previous().get();
-            previous.setWeight(previous.getWeight() + (weight / 2));
+            previous.setWeight(previous.getWeight() + (weight / 2), maxWeight);
             for (Synapse h : history) {
-                h.setWeight(h.getWeight() + (weight / 2));
+                h.setWeight(h.getWeight() + (weight / 2), maxWeight);
             }
             if (level > 1) {
                 history.add(previous);
-                updatePrev(previous, (weight / 2), level - 1, history);
+                updatePrev(previous, (weight / 2), level - 1, history, maxWeight);
             }
         }
     }
 
-    private void updateNext(Synapse synapseToUpdate, long weight, int level, List<Synapse> history) {
+    private void updateNext(Synapse synapseToUpdate, long weight, int level, List<Synapse> history, long maxWeight) {
         if (synapseToUpdate.next().isPresent() && level > 0) {
             Synapse next = synapseToUpdate.next().get();
-            next.setWeight(next.getWeight() + (weight / 2));
+            next.setWeight(next.getWeight() + (weight / 2), maxWeight);
             for (Synapse h : history) {
-                h.setWeight(h.getWeight() + (weight / 2));
+                h.setWeight(h.getWeight() + (weight / 2), maxWeight);
             }
             if (level > 1) {
                 history.add(next);
-                updateNext(next, (weight / 2), level - 1, history);
+                updateNext(next, (weight / 2), level - 1, history, maxWeight);
             }
         }
     }
