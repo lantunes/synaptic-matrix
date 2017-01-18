@@ -1,10 +1,12 @@
 package org.algoritica.neurons.matrix.demo;
 
 import org.algoritica.neurons.matrix.BasicSynapticMatrix;
+import org.algoritica.neurons.matrix.MatrixUtils;
 import org.algoritica.neurons.matrix.SynapticConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -47,9 +49,12 @@ public class MNISTDemoNormativePrototype {
 
         String start = df.format(new Date());
 
-        MNISTDemoRunner.run(new BasicSynapticMatrix(784, 10, new SynapticConfig(1, 20, 1500)));
+        BasicSynapticMatrix synapticMatrix = new BasicSynapticMatrix(784, 10, new SynapticConfig(1, 20, 1500));
+        MNISTDemoRunner.run(synapticMatrix);
 
         logger.info("start: " + start);
         logger.info("end: " + df.format(new Date()));
+
+        MatrixUtils.serialize(synapticMatrix, new File("target/matrix-mnist.json"));
     }
 }
