@@ -1,5 +1,6 @@
 package org.algoritica.neurons.matrix;
 
+import org.json.JSONObject;
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.factory.Nd4j;
 import org.nd4j.linalg.indexing.conditions.GreaterThan;
@@ -10,7 +11,7 @@ import org.nd4j.linalg.util.ArrayUtil;
  * Performance appears worse than the BasicSynapticMatrix, and there are problems coming up with the
  * correct frequencies, as of Jan. 1 2017.
  */
-public class NDSynapticMatrix implements SynapticMatrix {
+public class NDSynapticMatrix implements SynapticMatrix<NDSynapticMatrix> {
 
     private final SynapticConfig config;
 
@@ -75,5 +76,15 @@ public class NDSynapticMatrix implements SynapticMatrix {
         }
 
         return relativeSpikeFrequencies;
+    }
+
+    @Override
+    public JSONObject toJSON() {
+        throw new RuntimeException("not implemented");
+    }
+
+    @Override
+    public NDSynapticMatrix fromJSON(JSONObject serializationFormat) {
+        throw new RuntimeException("not implemented");
     }
 }

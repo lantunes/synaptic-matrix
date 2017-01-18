@@ -29,6 +29,14 @@ public class ClassCell {
         return activation;
     }
 
+    public List<Synapse> getDendriticSynapses() {
+        return new ArrayList<>(dendriticSynapses);
+    }
+
+    public String getId() {
+        return id;
+    }
+
     public String toString() {
         return "ClassCell " + id;
     }

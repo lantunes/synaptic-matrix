@@ -21,6 +21,10 @@ public class InputCell {
         return axonalSynapses.get(i);
     }
 
+    public String getId() {
+        return id;
+    }
+
     public String toString() {
         return "InputCell " + id;
     }

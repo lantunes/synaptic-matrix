@@ -1,11 +1,12 @@
 package org.algoritica.neurons.matrix;
 
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
-public class SupervisedSynapticMatrix implements SynapticMatrix {
+public class SupervisedSynapticMatrix implements SynapticMatrix<SupervisedSynapticMatrix> {
 
     private static final Logger logger = LoggerFactory.getLogger(SupervisedSynapticMatrix.class);
 
@@ -62,5 +63,18 @@ public class SupervisedSynapticMatrix implements SynapticMatrix {
 
     public int getNumClassCells() {
         return classCellsToLabels.keySet().size();
+    }
+
+    @Override
+    public JSONObject toJSON() {
+        JSONObject root = new JSONObject();
+        JSONObject basicSynapticMatrixJSON = matrix.toJSON();
+        root.put("basic", basicSynapticMatrixJSON);
+        return root;
+    }
+
+    @Override
+    public SupervisedSynapticMatrix fromJSON(JSONObject root) {
+        return null;
     }
 }

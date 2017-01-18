@@ -1,14 +1,20 @@
 package org.algoritica.neurons.matrix;
 
+import java.util.Optional;
+
 public class Synapse {
 
-    private final InputCell inputCell;
+    private final String inputCell;
 
-    private final ClassCell classCell;
+    private final String classCell;
 
     private long weight;
 
-    public Synapse(long initialWeight, InputCell inputCell, ClassCell classCell) {
+    private Synapse previous;
+
+    private Synapse next;
+
+    public Synapse(long initialWeight, String inputCell, String classCell) {
         this.weight = initialWeight;
         this.inputCell = inputCell;
         this.classCell = classCell;
@@ -20,6 +26,22 @@ public class Synapse {
 
     public void setWeight(long weight) {
         this.weight = weight;
+    }
+
+    public void setPrevious(Synapse previous) {
+        this.previous = previous;
+    }
+
+    public void setNext(Synapse next) {
+        this.next = next;
+    }
+
+    public Optional<Synapse> previous() {
+        return Optional.ofNullable(previous);
+    }
+
+    public Optional<Synapse> next() {
+        return Optional.ofNullable(next);
     }
 
     public String toString() {
