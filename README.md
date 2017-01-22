@@ -1,7 +1,7 @@
 Synaptic Matrix
 ===============
 
-This project represents an ongoing exploration to find new neurobiologically inspired learning algorithms and computational techniques that are lighter weight and more computationally efficient. It represents a search for alternatives to the neural net/deep learning movement, which has a dependency on--and achieves practicality only through--state-of-the-art computational power and resources (such as GPUs). 
+This project represents an ongoing exploration to find new neurobiologically inspired learning algorithms and computational techniques that are lighter weight and more computationally efficient. It represents a search for alternatives to the current neural net/deep learning/backprop paradigm, which has a dependency on--and achieves practicality only through--state-of-the-art computational power and resources (such as GPUs). 
 
 This work is inspired by, and based on, Dr. Arnold Trehub's work. For more information, see his book, **The Cognitive Brain**, and visit his web page: http://people.umass.edu/trehub/
 
