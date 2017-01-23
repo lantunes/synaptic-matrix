@@ -4,9 +4,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.PriorityQueue;
+import java.util.stream.IntStream;
 
 public class BasicSynapticMatrix implements SynapticMatrix<BasicSynapticMatrix> {
 
@@ -124,34 +123,23 @@ public class BasicSynapticMatrix implements SynapticMatrix<BasicSynapticMatrix> 
         if (input.length != inputCells.size()) {
             throw new IllegalArgumentException("the number of inputs does not equal the number of input cells");
         }
-
-        int[] relativeSpikeFrequencies = new int[classCells.size()];
-        for (int c = 0; c < classCells.size(); c++) {
-            relativeSpikeFrequencies[c] = classCells.get(c).activate(input);
-        }
-        return relativeSpikeFrequencies;
+        return classCells.stream().parallel()
+                .mapToInt(classCell -> classCell.activate(input))
+                .toArray();
     }
 
-    /*
-     * evaluates the input and returns the result as a max-heap
-     */
-    public PriorityQueue<ActivityAndClass> heap(int[] input) {
+    public int maxClassCellNumber(int[] input) {
         if (input.length != inputCells.size()) {
             throw new IllegalArgumentException("the number of inputs does not equal the number of input cells");
         }
-
-        PriorityQueue<ActivityAndClass> maxHeap = new PriorityQueue<>((Comparator<ActivityAndClass>) (o1, o2) -> {
-            /*we're reversing the comparison logic because the PriorityQueue is implemented as a min-heap*/
-            if (o1.getActivity() < o2.getActivity()) return 1;
-            if (o1.getActivity() > o2.getActivity()) return -1;
-            return 0;
-        });
-
-        for (int c = 0; c < classCells.size(); c++) {
-            maxHeap.add(new ActivityAndClass(classCells.get(c).activate(input), c));
-        }
-
-        return maxHeap;
+        if (classCells.isEmpty()) return -1;
+        return IntStream.range(0, classCells.size()).parallel()
+                .mapToObj(i -> new ActivityAndClass(classCells.get(i).activate(input), i))
+                .max((o1, o2) -> {
+                    if (o1.getActivity() > o2.getActivity()) return 1;
+                    if (o1.getActivity() < o2.getActivity()) return -1;
+                    return 0;
+                }).get().getClassCellNumber();
     }
 
     @Override

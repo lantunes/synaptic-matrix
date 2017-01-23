@@ -29,8 +29,7 @@ public class SupervisedSynapticMatrix implements SynapticMatrix<SupervisedSynapt
      * The inputExample must be an array containing only 0s and 1s.
      */
     public void train(int[] example, int label) {
-        PriorityQueue<ActivityAndClass> heap = matrix.heap(example);
-        int predictedClass = (heap.size() == 0) ? -1 : heap.peek().getClassCellNumber();
+        int predictedClass = matrix.maxClassCellNumber(example);
 
         if (labelToClassCells.get(label) == null || !labelToClassCells.get(label).contains(predictedClass)) {
             //there was a prediction error; train
