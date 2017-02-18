@@ -63,6 +63,8 @@ To have the synaptic matrix learn a new example, we take the i<sup>th</sup> exam
 
    **_W_**<sub>.,i</sub> = b + **_E_**(c + kN<sup>-1</sup>)
    
+   The variables _b_, _c_, and _k_ are hyperparameter constants and whole numbers, where _b < c << k_.
+   
 4. Expand the synaptic matrix, by adding a new column, in preparation for any new examples:
 
    **_W_** = [**_W_** **_J<sub>m,1</sub>_**]
