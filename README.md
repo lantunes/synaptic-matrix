@@ -48,18 +48,23 @@ Note that there is only a single column in the synaptic matrix at this point.
 
 ### Learning
 
-To have the synaptic matrix learn a new example, we take the i<sup>th</sup> example, **_x_**<sub>i</sub>, and update the i<sup>th</sup> column of **_W_** as follows:
+To have the synaptic matrix learn a new example, we take the i<sup>th</sup> example, **_x_**<sub>i</sub>, and perform the following steps:
 
 1. Calculate the eligibility vector, **_E_**:
-   **_E_** = **_x_**<sub>i</sub> <sup>o</sup> **_W_**<sub>*,i</sub>    <sub><sup>(**_E_** is the Hadamard product of **_x_**<sub>i</sub> and **_W_**<sub>*,i</sub>)</sup></sub>
+
+   **_E_** = **_x_**<sub>i</sub> <sup>o</sup> **_W_**<sub>.,i</sub>
+   <sub><sup>(where <sup>o</sup> represents the Hadamard product)</sup></sub>
    
 2. Calculate N, the number of eligible synapses:
+
    N = sum {**_E_**}
 
 3. Update the i<sup>th</sup> column of the synaptic matrix:
-   **_W_**<sub>*,i</sub> = b + **_E_**(c + kN<sup>-1</sup>)
+
+   **_W_**<sub>.,i</sub> = b + **_E_**(c + kN<sup>-1</sup>)
    
 4. Expand the synaptic matrix, by adding a new column, in preparation for any new examples:
+
    **_W_** = [**_W_** **_J<sub>m,1</sub>_**]
    
 Each column in the synaptic matrix is, by convention, called a _class cell_. The column represents the cell's dendritic synaptic weights. 
@@ -82,10 +87,9 @@ Where c<sub>a<sub>max</sub></sub> represents the index of the class cell with th
 
 Training consists of the following very simple algorithm:
 
-
-*for-each training example **_x_**<sub>i</sub>
-&nbsp;&nbsp;&nbsp; **Evaluate** the example against the synaptic matrix, comparing the predicted to the actual label
-&nbsp;&nbsp;&nbsp; if the prediction is wrong, **Learn** the example, else continue to the next example*
+for-each training example **_x_**<sub>i</sub><br/>
+&nbsp;&nbsp;&nbsp; **Evaluate** the example against the synaptic matrix, comparing the predicted to the actual label<br/>
+&nbsp;&nbsp;&nbsp; if the prediction is wrong, **Learn** the example, else continue to the next example
 
 
 
