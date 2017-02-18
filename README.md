@@ -77,7 +77,7 @@ During evaluation against an example, we simply want to find the class cell with
 
 a<sub>max</sub> = max {**_x_**<sup>T</sup> **_W_**}
 
-Here, a<sub>max</sub>, the maximum activity in the synaptic matrix, is the maximum of the vector-matrix product of the transpose of **_x_** with **_W_**. The class cell, with the highest activity is simply:
+Here, a<sub>max</sub>, the maximum activity in the synaptic matrix, is the maximum of the vector-matrix product of the transpose of **_x_** with **_W_**. The class cell with the highest activity is simply:
 
 c<sub>a<sub>max</sub></sub> = argmax {**_x_**<sup>T</sup> **_W_**}
 
@@ -88,8 +88,8 @@ Where c<sub>a<sub>max</sub></sub> represents the index of the class cell with th
 Training consists of the following very simple algorithm:
 
 for-each training example **_x_**<sub>i</sub><br/>
-&nbsp;&nbsp;&nbsp; **Evaluate** the example against the synaptic matrix, comparing the predicted to the actual label<br/>
-&nbsp;&nbsp;&nbsp; if the prediction is wrong, **Learn** the example, else continue to the next example
+&nbsp;&nbsp;&nbsp; **Evaluate** **_x_**<sub>i</sub> against **_W_**, comparing the predicted to the actual label<br/>
+&nbsp;&nbsp;&nbsp; if the prediction is wrong, **Learn** **_x_**<sub>i</sub>, else continue to the next example
 
 
 
